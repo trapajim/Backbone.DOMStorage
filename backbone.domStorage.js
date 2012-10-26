@@ -103,7 +103,9 @@ _.extend(Backbone.LocalStorage.prototype, {
 // *localStorage* property, which should be an instance of `Store`.
 // window.Store.sync and Backbone.localSync is deprectated, use Backbone.LocalStorage.sync instead
 Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(method, model, options, error) {
-  var store = model.localStorage || model.collection.localStorage;
+  var store = model.localStorage || model.collection.localStorage,
+    resp,
+    syncDfd = $.Deferred && $.Deferred();
 
   // Backwards compatibility with Backbone <= 0.3.3
   if (typeof options == 'function') {
@@ -112,8 +114,6 @@ Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(m
       error: error
     };
   }
-
-  var resp;
 
   switch (method) {
     case "read":    resp = model.id != undefined ? store.find(model) : store.findAll(); break;
@@ -124,9 +124,17 @@ Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(m
 
   if (resp) {
     options.success(resp);
+    if (syncDfd) {
+      syncDfd.resolve();
+    }
   } else {
     options.error("Record not found");
+    if (syncDfd) {
+      syncDfd.reject();
+    }
   }
+
+  return syncDfd && syncDfd.promise();
 };
 
 // Our Store is represented by a single JS object in *sessionStorage*. Create it
