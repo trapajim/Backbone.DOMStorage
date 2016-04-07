@@ -18,7 +18,8 @@ Create your collections:
 var SomeCollection = Backbone.Collection.extend({
   
   localStorage: new Backbone.LocalStorage("SomeLocalCollection"), // Unique name within your app.
-  
+  // or 
+  localStorage: new Backbone.LocalStorage("SomeLocalCollection",true), // the second parameter is used to change from local storage to session storage
   // ... everything else is normal.
   
 });
@@ -32,13 +33,17 @@ SomeCollection.disableLocalPersist = true;
 window.SomeCollection = Backbone.Collection.extend({
   
   sessionStorage: new Backbone.SessionStorage("SomeSessionCollection"), // Unique name within your app.
-  
+  //or
+  localStorage: new Backbone.LocalStorage("SomeLocalCollection",true), // the second parameter is used to change from local storage to session storage
   // ... everything else is normal.
   
 });
 //you can disable the Adapter by setting following flag. 
 SomeCollection.disableLocalPersist = true;
 ```
+
+## Todo
+* optional fetch from local storage
 
 
 ## Credits
