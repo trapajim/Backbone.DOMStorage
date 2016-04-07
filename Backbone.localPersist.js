@@ -168,12 +168,16 @@
   };
   Backbone.ajaxSync = Backbone.sync;
 
-  Backbone.getSyncMethod = function(model) {
-    if((model.localPersist && !model.disableLocalPersist) 
+  Backbone.getSyncMethod = function(model,args) {
+    if((model.localPersist && !model.disableLocalPersist && model.syncLocal) 
     || (model.collection && model.collection.localPersist && !model.collection.disableLocalPersist)) {
-      return Backbone.localPersist.sync;
+      Backbone.localPersist.sync.apply(this,args);
     }
-    return Backbone.ajaxSync;
+    
+    if((model && model.disableAjaxSync !== undefined && !model.disableAjaxSync) 
+    || (model.collection && model.collection.disableAjaxSync !== undefined && !model.collection.disableAjaxSync)){
+      Backbone.ajaxSync.apply(this,args);
+    }
   };
 
   // Override 'Backbone.sync' to default to localSync,
