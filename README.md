@@ -17,9 +17,9 @@ Create your collections:
 ```javascript
 var SomeCollection = Backbone.Collection.extend({
   
-  localStorage: new Backbone.LocalStorage("SomeLocalCollection"), // Unique name within your app.
+  localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.
   // or 
-  localStorage: new Backbone.LocalStorage("SomeLocalCollection",true), // the second parameter is used to change from local storage to session storage
+  localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
   // ... everything else is normal.
   
 });
@@ -32,9 +32,9 @@ SomeCollection.disableLocalPersist = true;
 ```javascript
 window.SomeCollection = Backbone.Collection.extend({
   
-  sessionStorage: new Backbone.SessionStorage("SomeSessionCollection"), // Unique name within your app.
+  localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.
   //or
-  localStorage: new Backbone.LocalStorage("SomeLocalCollection",true), // the second parameter is used to change from local storage to session storage
+  localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
   // ... everything else is normal.
   
 });
