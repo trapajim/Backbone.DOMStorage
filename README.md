@@ -20,8 +20,11 @@ var SomeCollection = Backbone.Collection.extend({
   localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.
   // or 
   localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
-  // ... everything else is normal.
   
+  disableLocalPersist = true, // default is false
+  disableAjaxSync = false, //default is true
+  
+  // ... everything else is normal.
 });
 //you can disable the Adapter by setting following flag. 
 SomeCollection.disableLocalPersist = true;
@@ -35,15 +38,16 @@ window.SomeCollection = Backbone.Collection.extend({
   localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.
   //or
   localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
-  // ... everything else is normal.
   
+  disableLocalPersist = true, // default is false
+  disableAjaxSync = false, //default is true
+  
+  // ... everything else is normal.
 });
 //you can disable the Adapter by setting following flag. 
 SomeCollection.disableLocalPersist = true;
 ```
 
-## Todo
-* optional fetch from local storage
 
 
 ## Credits
