@@ -41,11 +41,10 @@
   
   Backbone.localPersist = function(name, sessionStorage) {
     this.name =  typeof name === 'function' ? name() : name;
-    var store = this.getStorage().getItem(this.name) || '';
-    this.records = (store && store.split(',')) || [];
     this.storageType = (typeof sessionStorage != "undefined" && sessionStorage == true) 
                         ? storageTypes.session : storageTypes.local;
-       
+    var store = this.getStorage().getItem(this.name) || '';
+    this.records = (store && store.split(',')) || [];
   }
   
   _.extend(Backbone.localPersist.prototype, {
