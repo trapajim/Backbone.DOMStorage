@@ -23,7 +23,7 @@ var SomeCollection = Backbone.Collection.extend({
   
 });
 //you can disable the Adapter by setting following flag. 
-SomeCollection.disableLocalPersist = false;
+SomeCollection.disableLocalPersist = true;
 ```
 
 *or*
@@ -37,7 +37,7 @@ window.SomeCollection = Backbone.Collection.extend({
   
 });
 //you can disable the Adapter by setting following flag. 
-SomeCollection.disableLocalPersist = false;
+SomeCollection.disableLocalPersist = true;
 ```
 
 
