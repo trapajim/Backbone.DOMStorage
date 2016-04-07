@@ -1,0 +1,185 @@
+/**
+ * Backbone localStorage and sessionStorage Adapter
+ * 
+ */
+(function(){
+  var storageIsAvailable = true;
+  try{
+    if(typeof window.localStorage !== 'undefined') {
+      window.localStorage.setItem('storageIsAvailable','test');
+      window.localStorage.removeItem('storageIsAvailable');
+    }
+  }catch(err){
+    storageIsAvailable = false;
+  }
+  if (!storageIsAvailable
+    || typeof window.localStorage === 'undefined'
+    || typeof window.sessionStorage === 'undefined'){
+    throw("Envoirment does not support localStorage");    
+  }
+})();
+
+(function (){
+  //hold references
+  var _ = this._;
+  var backbone = this.Backbone;
+  var storageTypes =  {"local":1,"session":2 };
+  
+  //generate guid
+  function guid(){
+    var d = Date.now();
+    if(window.performance && typeof window.performance.now === 'function'){
+        d += performance.now();
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+  }
+  
+  Backbone.localPersist = function(name, sessionStorage) {
+    this.name =  typeof name === 'function' ? name() : name;
+    var store = this.getStorage().getItem(this.name) || '';
+    this.records = (store && store.split(',')) || [];
+    this.storageType = (typeof sessionStorage != "undefined" && sessionStorage == true) 
+                        ? storageTypes.session : storageTypes.local;
+       
+  }
+  
+  _.extend(Backbone.localPersist.prototype, {
+
+    save: function() {
+      this.getStorage().setItem(this.name, this.records.join(","));
+    },
+
+    safeGet: function(name) { 
+      var obj = this.getStorage().getItem(name); 
+      if (!obj) {
+        return '{}';
+      }
+      return obj;
+    },
+
+    // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
+    // have an id of it's own.
+    create: function(model) {
+      if (!model.id) {
+          model.id = guid();
+          model.set(model.idAttribute, model.id);
+      }
+      this.getStorage().setItem(this.name+"-"+model.id, JSON.stringify(model));
+      this.records.push(model.id.toString());
+      this.save();
+      return model.toJSON();
+    },
+
+    // Update a model by replacing its copy in `this.data`.
+    update: function(model) {
+      this.getStorage().setItem(this.name+"-"+model.id, JSON.stringify(model));
+      if (!_.include(this.records, model.id.toString())) this.records.push(model.id.toString()); this.save();
+      return model.toJSON();
+    },
+
+    // Retrieve a model from `this.data` by id.
+    find: function(model) {
+      return JSON.parse(this.safeGet(this.name+"-"+model.id));
+    },
+
+    // Return the array of all models currently in storage.
+    findAll: function() {
+      return _(this.records).chain()
+          .map(function(id){
+            var obj = JSON.parse(this.safeGet(this.name+"-"+id));
+            return _.isEmpty(obj) ? false : obj;
+          }, this)
+          .compact()
+          .value();
+    },
+
+    // Delete a model from `this.data`, returning it.
+    destroy: function(model) {
+      this.getStorage().removeItem(this.name+"-"+model.id);
+      this.records = _.reject(this.records, function(record_id){return record_id == model.id.toString();});
+      this.save();
+      return model;
+    },
+
+    getStorage: function() {
+      var storage;
+      if(this.storageType === storageTypes.local){
+        storage = this._localStorage();
+      } else {
+        storage = this._sessionStorage();
+      }
+      return storage;
+    },
+    
+    _localStorage: function(){
+      return localStorage;
+    },
+    
+    _sessionStorage: function(){
+      return sessionStorage;
+    }
+
+  });
+  
+  // localSync delegate to the model or collection's
+  // *localStorage* property, which should be an instance of `Store`.
+  Backbone.localPersist.sync = function(method, model, options, error) {
+    var store = model.localPersist || model.collection.localPersist,
+      resp,
+      error = "Record not found",
+      syncDfd = $.Deferred && $.Deferred(); //If $ is having Deferred - use it.
+
+    // Backwards compatibility with Backbone <= 0.3.3
+    if (typeof options == 'function') {
+      options = {
+        success: options,
+        error: error
+      };
+    }
+
+    try {
+
+      switch (method) {
+        case "read":    resp = model.id != undefined ? store.find(model) : store.findAll(); break;
+        case "create":  resp = store.create(model);                            break;
+        case "update":  resp = store.update(model);                            break;
+        case "delete":  resp = store.destroy(model);                           break;
+      }
+
+    } catch (e) { error = e; }
+
+    if (resp) {
+      options.success(resp);
+      if (syncDfd) {
+        syncDfd.resolve();
+      }
+    } else {
+      options.error("Record not found");
+      if (syncDfd) {
+        syncDfd.reject();
+      }
+    }
+
+    return syncDfd && syncDfd.promise();
+  };
+  Backbone.ajaxSync = Backbone.sync;
+
+  Backbone.getSyncMethod = function(model) {
+    if((model.localPersist && !model.disableLocalPersist) 
+    || (model.collection && model.collection.localPersist && !model.collection.disableLocalPersist)) {
+      return Backbone.localPersist.sync;
+    }
+    return Backbone.ajaxSync;
+  };
+
+  // Override 'Backbone.sync' to default to localSync,
+  // the original 'Backbone.sync' is still available in 'Backbone.ajaxSync'
+  Backbone.sync = function(method, model, options, error) {
+    return Backbone.getSyncMethod(model).apply(this, [method, model, options, error]);
+  };
+})();

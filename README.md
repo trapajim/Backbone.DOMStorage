@@ -1,30 +1,29 @@
-# Backbone localStorage and sessionStorage Adapter v1.0
+# Backbone Adapter for local persistency 
 
-[![Build Status](https://secure.travis-ci.org/mikeedwards/Backbone.DOMStorage.png?branch=master)](http://travis-ci.org/mikeedwards/Backbone.DOMStorage)
 
-Quite simply a localStorage and sessionStorage adapter for Backbone. It's a drop-in replacement for Backbone.Sync() to handle saving to a localStorage or sessionStorage databases.
-
-This is a *rough* fork of jeromegn's excellent Backbone.localStorage module.
+This is a fork of mikeedwards Backbone.domStorage module which is based on jeromegn's excellent Backbone.localStorage module.
 
 ## Usage
 
-Include Backbone.domStorage after having included Backbone.js:
+Include Backbone.localPersist after having included Backbone.js:
 
 ```html
 <script type="text/javascript" src="backbone.js"></script>
-<script type="text/javascript" src="backbone.domStorage.js"></script>
+<script type="text/javascript" src="backbone.localPersist.js"></script>
 ```
 
-Create your collections like so:
+Create your collections:
 
 ```javascript
-window.SomeCollection = Backbone.Collection.extend({
+var SomeCollection = Backbone.Collection.extend({
   
   localStorage: new Backbone.LocalStorage("SomeLocalCollection"), // Unique name within your app.
   
   // ... everything else is normal.
   
 });
+//you can disable the Adapter by setting following flag. 
+SomeCollection.disableLocalPersist = false;
 ```
 
 *or*
@@ -37,30 +36,16 @@ window.SomeCollection = Backbone.Collection.extend({
   // ... everything else is normal.
   
 });
+//you can disable the Adapter by setting following flag. 
+SomeCollection.disableLocalPersist = false;
 ```
 
-Feel free to use Backbone as you usually would, this is a drop-in replacement.
-
-## Contributing
-
-You'll need node and to `npm install` before being able to run the minification script.
-
-1. Fork;
-2. Write code;
-3. Write tests (or vice et versa);
-4. `make test`;
-5. `make minified`;
-6. Create a pull request.
-
-Have fun!
 
 ## Credits
+Thanks to [mikeedwards](https://github.com/mikeedwards) for the domStorage module
+Thanks to [Jerome Gravel-Niquet](https://github.com/jeromegn) for the localStorage module 
 
-Thanks to [Jerome Gravel-Niquet](https://github.com/jeromegn) for all the actual hard work.  If you see anything bad here, it's my fault, not his.
-Thanks to [Mark Woodall](https://github.com/llad) for the QUnit tests.
-Thanks to [Martin Häcker](https://github.com/dwt) for the many fixes and the test isolation.
-
-## Licensed
+## License
 
 Licensed under MIT license
 
