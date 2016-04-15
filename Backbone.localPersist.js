@@ -138,7 +138,9 @@
     var store = model.localPersist || model.collection.localPersist,
       resp,
       error = "Record not found",
-      syncDfd = $.Deferred && $.Deferred(); //If $ is having Deferred - use it.
+      syncDfd = Backbone.$ ?
+        (Backbone.$.Deferred && Backbone.$.Deferred()) :
+        (Backbone.Deferred && Backbone.Deferred());
 
     // Backwards compatibility with Backbone <= 0.3.3
     if (typeof options == 'function') {
