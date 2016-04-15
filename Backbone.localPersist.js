@@ -4,17 +4,17 @@
  */
 (function (root, factory) {
   if (typeof exports === 'object' && typeof require === 'function') {
-    module.exports = factory(require("backbone"),require("underscore"));
+    module.exports = factory(require("backbone"),require("underscore"),require('jquery'));
   } else if (typeof define === "function" && define.amd) {
     // AMD. Register as an anonymous module.
-    define(["backbone","underscore"], function(Backbone,_) {
+    define(["backbone","underscore","jquery"], function(Backbone,_) {
       // Use global variables if the locals are undefined.
-      return factory(Backbone || root.Backbone);
+      return factory(Backbone || root.Backbone,_,$);
     });
   } else {
     factory(Backbone,_);
   }
-}(this, function(Backbone,_) {
+}(this, function(Backbone,_,$) {
   var storageIsAvailable = true;
   try{
     if(typeof window.localStorage !== 'undefined') {
