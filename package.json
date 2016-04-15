@@ -1,0 +1,33 @@
+{
+  "name": "backbone.localpersist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Backbone.localPersist.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trapajim/Backbone.localPersist.git"
+  },
+  "devDependencies": {
+    "backbone": "~1.x.x",
+    "underscore": ">=1.4.0"
+  },
+  "peerDependencies": {
+    "backbone": "~1.x.x"
+  },
+  "keywords": [
+    "backbone",
+    "localstorage",
+    "local",
+    "storage",
+    "sessionstorage",
+    "session",
+    "cache",
+    "sync"
+  ],
+  "author": "Tobias Koch <mail@tk-dev.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trapajim/Backbone.localPersist/issues"
+  },
+  "homepage": "https://github.com/trapajim/Backbone.localPersist#readme"
+}
