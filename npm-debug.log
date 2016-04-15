@@ -6,31 +6,103 @@
 2 info using npm@3.3.12
 3 info using node@v5.1.0
 4 verbose publish [ './' ]
-5 verbose stack Error: Failed to parse json
-5 verbose stack Trailing comma in object at 14:3
-5 verbose stack   },
-5 verbose stack   ^
-5 verbose stack     at parseError (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:379:11)
-5 verbose stack     at parseJson (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:68:23)
-5 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:48:5
-5 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:76:16
-5 verbose stack     at tryToString (fs.js:414:3)
-5 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:401:12)
-6 verbose cwd /Users/tobsus/Desktop/backbone
-7 error Darwin 15.4.0
-8 error argv "/usr/local/Cellar/node/5.1.0/bin/node" "/usr/local/bin/npm" "publish" "./"
-9 error node v5.1.0
-10 error npm  v3.3.12
-11 error file /Users/tobsus/Desktop/backbone/package.json
-12 error code EJSONPARSE
-13 error Failed to parse json
-13 error Trailing comma in object at 14:3
-13 error   },
-13 error   ^
-14 error File: /Users/tobsus/Desktop/backbone/package.json
-15 error Failed to parse package.json data.
-15 error package.json must be actual JSON, not just JavaScript.
-15 error
-15 error This is not a bug in npm.
-15 error Tell the package author to fix their package.json file. JSON.parse
-16 verbose exit [ 1, true ]
+5 silly cache add args [ './', null ]
+6 verbose cache add spec ./
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: './',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: './',
+7 silly cache add   spec: '/Users/tobsus/Desktop/backbone',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/tobsus/.npm/backbone.localpersist/1.0.3/package.tgz not in flight; packing
+9 info lifecycle backbone.localpersist@1.0.3~prepublish: backbone.localpersist@1.0.3
+10 silly lifecycle backbone.localpersist@1.0.3~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/Users/tobsus/.npm/backbone.localpersist/1.0.3/package.tgz',
+11 verbose tar pack   '/Users/tobsus/Desktop/backbone' ]
+12 verbose tarball /Users/tobsus/.npm/backbone.localpersist/1.0.3/package.tgz
+13 verbose folder /Users/tobsus/Desktop/backbone
+14 verbose addLocalTarball adding from inside cache /Users/tobsus/.npm/backbone.localpersist/1.0.3/package.tgz
+15 silly cache afterAdd backbone.localpersist@1.0.3
+16 verbose afterAdd /Users/tobsus/.npm/backbone.localpersist/1.0.3/package/package.json not in flight; writing
+17 verbose afterAdd /Users/tobsus/.npm/backbone.localpersist/1.0.3/package/package.json written
+18 silly publish { name: 'backbone.localpersist',
+18 silly publish   version: '1.0.3',
+18 silly publish   description: '',
+18 silly publish   main: 'Backbone.localPersist.js',
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git+https://github.com/trapajim/Backbone.localPersist.git' },
+18 silly publish   devDependencies: { backbone: '~1.x.x', underscore: '>=1.4.0', jquery: '^2.1.4' },
+18 silly publish   peerDependencies: { backbone: '~1.x.x' },
+18 silly publish   keywords:
+18 silly publish    [ 'backbone',
+18 silly publish      'localstorage',
+18 silly publish      'local',
+18 silly publish      'storage',
+18 silly publish      'sessionstorage',
+18 silly publish      'session',
+18 silly publish      'cache',
+18 silly publish      'sync' ],
+18 silly publish   author: { name: 'Tobias Koch', email: 'mail@tk-dev.de' },
+18 silly publish   license: 'MIT',
+18 silly publish   bugs: { url: 'https://github.com/trapajim/Backbone.localPersist/issues' },
+18 silly publish   homepage: 'https://github.com/trapajim/Backbone.localPersist#readme',
+18 silly publish   readme: '# Backbone Adapter for local persistency \n\n\nThis is a fork of mikeedwards Backbone.domStorage module which is based on jeromegn\'s excellent Backbone.localStorage module.\n\n## Usage\n\nInclude Backbone.localPersist after having included Backbone.js:\n\n```html\n<script type="text/javascript" src="backbone.js"></script>\n<script type="text/javascript" src="backbone.localPersist.js"></script>\n```\n\nor \n```\nnpm install backbone.localpersist\n```\n\nCreate your collections:\n\n```javascript\nvar SomeCollection = Backbone.Collection.extend({\n  \n  localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.\n  // or \n  localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage\n  \n  disableLocalPersist = true, // default is false\n  disableAjaxSync = false, //default is true\n  \n  // ... everything else is normal.\n});\n//you can disable the Adapter by setting following flag. \nSomeCollection.disableLocalPersist = true;\n```\n\n*or*\n\n```javascript\nwindow.SomeCollection = Backbone.Collection.extend({\n  \n  localPersist: new Backbone.localPersist("SomeLocalCollection"), // Unique name within your app.\n  //or\n  localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage\n  \n  disableLocalPersist = true, // default is false\n  disableAjaxSync = false, //default is true\n  \n  // ... everything else is normal.\n});\n//you can disable the Adapter by setting following flag. \nSomeCollection.disableLocalPersist = true;\n```\n\n\n\n## Credits\nThanks to [mikeedwards](https://github.com/mikeedwards) for the domStorage module\nThanks to [Jerome Gravel-Niquet](https://github.com/jeromegn) for the localStorage module \n\n## License\n\nLicensed under MIT license\n\nCopyright (c) 2010 Jerome Gravel-Niquet\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n"Software"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: 'f71afdb2faa885a181dabb215b270acf54746c85',
+18 silly publish   _id: 'backbone.localpersist@1.0.3',
+18 silly publish   scripts: {},
+18 silly publish   _shasum: '4b2fa7de89d7117aa667917440ff169d60f35944',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name backbone.localpersist
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/backbone.localpersist
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/tobsus/.npm/backbone.localpersist/1.0.3/package.tgz
+26 verbose request uri https://registry.npmjs.org/backbone.localpersist
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 17:16:02
+29 verbose request using bearer token for auth
+30 verbose request id c6bf7f2822318910
+31 http request PUT https://registry.npmjs.org/backbone.localpersist
+32 http 403 https://registry.npmjs.org/backbone.localpersist
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=300',
+33 verbose headers   'content-length': '95',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Fri, 15 Apr 2016 08:16:04 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-nrt6121-NRT',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1460708163.682975,VS0,VE534',
+33 verbose headers   vary: 'Accept-Encoding' }
+34 verbose request invalidating /Users/tobsus/.npm/registry.npmjs.org/backbone.localpersist on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 1.0.3." : backbone.localpersist
+36 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+36 verbose stack     at emitTwo (events.js:87:13)
+36 verbose stack     at Request.emit (events.js:172:7)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1082:10)
+36 verbose stack     at emitOne (events.js:82:20)
+36 verbose stack     at Request.emit (events.js:169:7)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+37 verbose statusCode 403
+38 verbose pkgid backbone.localpersist
+39 verbose cwd /Users/tobsus/Desktop/backbone
+40 error Darwin 15.4.0
+41 error argv "/usr/local/Cellar/node/5.1.0/bin/node" "/usr/local/bin/npm" "publish" "./"
+42 error node v5.1.0
+43 error npm  v3.3.12
+44 error code E403
+45 error "You cannot publish over the previously published version 1.0.3." : backbone.localpersist
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
