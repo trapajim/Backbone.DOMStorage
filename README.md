@@ -12,6 +12,11 @@ Include Backbone.localPersist after having included Backbone.js:
 <script type="text/javascript" src="backbone.localPersist.js"></script>
 ```
 
+or 
+```
+npm install backbone.localpersist
+```
+
 Create your collections:
 
 ```javascript
