@@ -2,7 +2,19 @@
  * Backbone localStorage and sessionStorage Adapter
  * 
  */
-(function(){
+(function (root, factory) {
+  if (typeof exports === 'object' && typeof require === 'function') {
+    module.exports = factory(require("backbone"),require("underscore"));
+  } else if (typeof define === "function" && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["backbone","underscore"], function(Backbone,_) {
+      // Use global variables if the locals are undefined.
+      return factory(Backbone || root.Backbone);
+    });
+  } else {
+    factory(Backbone,_);
+  }
+}(this, function(Backbone,_) {
   var storageIsAvailable = true;
   try{
     if(typeof window.localStorage !== 'undefined') {
@@ -17,9 +29,7 @@
     || typeof window.sessionStorage === 'undefined'){
     throw("Envoirment does not support localStorage");    
   }
-})();
 
-(function (){
   //hold references
   var _ = this._;
   var backbone = this.Backbone;
@@ -185,4 +195,4 @@
   Backbone.sync = function(method, model, options, error) {
     return Backbone.getSyncMethod(model).apply(this, [method, model, options, error]);
   };
-})();
+}));
