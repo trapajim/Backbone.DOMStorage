@@ -30,9 +30,6 @@
     throw("Envoirment does not support localStorage");    
   }
 
-  //hold references
-  var _ = this._;
-  var backbone = this.Backbone;
   var storageTypes =  {"local":1,"session":2 };
   
   //generate guid
