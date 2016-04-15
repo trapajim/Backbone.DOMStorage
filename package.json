@@ -10,7 +10,7 @@
   "devDependencies": {
     "backbone": "~1.x.x",
     "underscore": ">=1.4.0",
-    "jquery": "^2.1.4",
+    "jquery": "^2.1.4"
   },
   "peerDependencies": {
     "backbone": "~1.x.x"
