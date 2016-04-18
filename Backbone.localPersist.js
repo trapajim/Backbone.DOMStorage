@@ -134,8 +134,25 @@
     
     _sessionStorage: function(){
       return sessionStorage;
-    }
+    },
+    
+    _clear: function() {
+      var local = this.localStorage(),
+        itemRe = new RegExp("^" + this.name + "-");
 
+      // Remove id-tracking item (e.g., "foo").
+      local.removeItem(this.name);
+
+      // Match all data items (e.g., "foo-ID") and remove.
+      for (var k in local) {
+        if (itemRe.test(k)) {
+          local.removeItem(k);
+        }
+      }
+
+      this.records.length = 0;
+    }
+    
   });
   
   // localSync delegate to the model or collection's
