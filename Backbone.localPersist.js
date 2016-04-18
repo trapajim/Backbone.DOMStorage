@@ -137,7 +137,7 @@
     },
     
     _clear: function() {
-      var local = this.localStorage(),
+      var local = this.getStorage(),
         itemRe = new RegExp("^" + this.name + "-");
 
       // Remove id-tracking item (e.g., "foo").
