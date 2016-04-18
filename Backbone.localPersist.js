@@ -32,6 +32,12 @@
 
   var storageTypes =  {"local":1,"session":2 };
   
+  function result(object, property) {
+    if (object == null) return void 0;
+    var value = object[property];
+    return (typeof value === 'function') ? object[property]() : value;
+  }
+
   //generate guid
   function guid(){
     var d = Date.now();
@@ -192,7 +198,10 @@
   // Override 'Backbone.sync' to default to localSync,
   // the original 'Backbone.sync' is still available in 'Backbone.ajaxSync'
   Backbone.sync = function(method, model, options, error) {
-    return Backbone.getSyncMethod(model,[method, model, options, error]);
+    if(result(model,"localPersist") || result(model.collection,"localPersist")){
+      return Backbone.getSyncMethod(model,[method, model, options, error]);
+    }
+    return Backbone.ajaxSync.apply(this,[method,model,options,error]);
   };
   return Backbone.localPersist;
 }));
