@@ -26,8 +26,8 @@ var SomeCollection = Backbone.Collection.extend({
   // or 
   localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
   
-  disableLocalPersist = true, // default is false
-  disableAjaxSync = false, //default is true
+  disableLocalPersist: true, // default is false
+  disableAjaxSync: false, //default is true
   
   // ... everything else is normal.
 });
@@ -44,8 +44,8 @@ window.SomeCollection = Backbone.Collection.extend({
   //or
   localPersist: new Backbone.localPersist("SomeLocalCollection", true), // the second parameter is used to change from local storage to session storage
   
-  disableLocalPersist = true, // default is false
-  disableAjaxSync = false, //default is true
+  disableLocalPersist: true, // default is false
+  disableAjaxSync: false, //default is true
   
   // ... everything else is normal.
 });
